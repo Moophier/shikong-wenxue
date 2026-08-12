@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时空文学 — 那些跨越时空的文字碎片</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0a08;
+  --surface: #1a1714;
+  --paper: #f5f0e6;
+  --ink: #f0ece4;
+  --muted: #7a756d;
+  --accent: #c9a96e;
+  --accent-dim: #8a7448;
+  --border: #2a2520;
+  --gold: #d4a849;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.9;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at 20% 30%, rgba(201,169,110,0.03) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 70%, rgba(139,90,43,0.02) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ====== HERO ====== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-dim), transparent);
+}
+.hero h1 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--ink);
+  margin-bottom: 20px;
+  animation: fadeUp 1s ease;
+}
+.hero .subtitle {
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  max-width: 500px;
+  margin-bottom: 12px;
+  animation: fadeUp 1s ease 0.3s both;
+}
+.hero .count-line {
+  font-size: 0.78rem;
+  color: var(--accent-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 48px;
+  animation: fadeUp 1s ease 0.5s both;
+}
+.hero .count-line span {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.hero-nav {
+  display: flex;
+  gap: 24px;
+  animation: fadeUp 1s ease 0.7s both;
+}
+.hero-nav a {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.12em;
+  padding: 10px 24px;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+.hero-nav a:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+}
+.hero-nav a.primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+.hero-nav a.primary:hover {
+  background: var(--gold);
+  letter-spacing: 0.18em;
+}
+
+/* ====== FILTERS ====== */
+.filters {
+  padding: 40px 24px 0;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeUp 0.8s ease;
+}
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.filter-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  align-self: center;
+  margin-right: 4px;
+  min-width: 40px;
+}
+.filter-btn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.06em;
+}
+.filter-btn:hover { color: var(--ink); border-color: var(--accent-dim); }
+.filter-btn.active {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ====== FRAGMENTS ====== */
+.fragments {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.fragment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 40px 36px;
+  margin-bottom: 32px;
+  position: relative;
+  animation: fadeUp 0.6s ease both;
+  transition: border-color 0.3s ease;
+}
+.fragment-card:hover {
+  border-color: var(--accent-dim);
+}
+.fragment-card::before {
+  content: '"';
+  position: absolute;
+  top: 16px; left: 20px;
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 4rem;
+  color: var(--accent-dim);
+  opacity: 0.25;
+  line-height: 1;
+}
+.fragment-passage {
+  font-size: 1.05rem;
+  line-height: 2.2;
+  color: var(--ink);
+  margin-bottom: 24px;
+  text-indent: 2em;
+  padding-left: 16px;
+}
+.fragment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.meta-item {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+.meta-item strong {
+  color: var(--accent);
+  font-weight: 500;
+}
+.meta-mood {
+  font-size: 0.72rem;
+  color: var(--accent-dim);
+  border: 1px solid var(--accent-dim);
+  padding: 2px 10px;
+  letter-spacing: 0.08em;
+}
+.meta-feeling {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* ====== LOADING ====== */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+.loading .dots::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+@keyframes dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+/* ====== CONTRIBUTE CTA ====== */
+.cta {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+  text-align: center;
+}
+.cta-box {
+  border: 1px solid var(--accent-dim);
+  padding: 48px 36px;
+  position: relative;
+}
+.cta-box h2 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+}
+.cta-box p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-box a {
+  display: inline-block;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.85rem;
+  color: var(--bg);
+  background: var(--accent);
+  text-decoration: none;
+  padding: 14px 36px;
+  letter-spacing: 0.12em;
+  transition: all 0.3s ease;
+}
+.cta-box a:hover {
+  background: var(--gold);
+  letter-spacing: 0.18em;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  text-align: center;
+  padding: 32px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+
+/* ====== ANIMATIONS ====== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .fragment-card { padding: 28px 20px; }
+  .hero-nav { flex-direction: column; gap: 12px; }
+  .hero-nav a { text-align: center; }
+  .fragment-meta { gap: 10px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>时 空 文 学</h1>
+  <p class="subtitle">每一段文字都是穿越时空的信使<br>它在某个人的生命里等你</p>
+  <p class="count-line">已收录 <span id="totalCount">·</span> 条碎片</p>
+  <nav class="hero-nav">
+    <a href="#fragments">浏览碎片</a>
+    <a href="#contribute" class="primary">贡献一条</a>
+  </nav>
+</section>
+
+<section class="filters" id="fragments">
+  <div class="filter-row">
+    <span class="filter-label">心情</span>
+    <div id="moodFilters"></div>
+  </div>
+</section>
+
+<section class="fragments" id="fragmentList">
+  <div class="loading">正在加载碎片<span class="dots"></span></div>
+</section>
+
+<section class="cta" id="contribute">
+  <div class="cta-box">
+    <h2>你也有一段这样的文字吗</h2>
+    <p>它曾在某个深夜击中你，从此住在你的记忆里。把它带来，让更多人遇见它。</p>
+    <a href="fill.html">贡献一条碎片</a>
+  </div>
+</section>
+
+<footer>
+  时 空 文 学 &nbsp;·&nbsp; 每一段跨越时空的文字都值得被看见
+</footer>
+
+<script>
+var API_URL = 'https://script.google.com/macros/s/AKfycbw3omnz0nJYA_E-Z5ayZF41YqcaTttYrccGmO_r-KqTaNOE4KPMoCRtO3rRHpMxw_mbaA/exec';
+
+var allFragments = [];
+var currentMood = '全部';
+
+function loadFragments() {
+  fetch(API_URL + '?status=已发布')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      allFragments = d.fragments || [];
+      document.getElementById('totalCount').textContent = allFragments.length;
+      buildFilters();
+      render();
+    })
+    .catch(function() {
+      document.getElementById('fragmentList').innerHTML =
+        '<div class="empty">加载失败，请稍后再试</div>';
+    });
+}
+
+function buildFilters() {
+  var moods = {};
+  allFragments.forEach(function(f) {
+    if (f.mood) moods[f.mood] = (moods[f.mood] || 0) + 1;
+  });
+
+  var container = document.getElementById('moodFilters');
+  var html = '<button class="filter-btn active" onclick="filterMood(\'全部\', this)">全部</button>';
+  Object.keys(moods).forEach(function(m) {
+    html += '<button class="filter-btn" onclick="filterMood(\'' + m + '\', this)">' + m + ' ' + moods[m] + '</button>';
+  });
+  container.innerHTML = html;
+}
+
+function filterMood(mood, btn) {
+  currentMood = mood;
+  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  var filtered = currentMood === '全部'
+    ? allFragments
+    : allFragments.filter(function(f) { return f.mood === currentMood; });
+
+  if (filtered.length === 0) {
+    document.getElementById('fragmentList').innerHTML =
+      '<div class="empty">暂无此分类的碎片</div>';
+    return;
+  }
+
+  var html = '';
+  filtered.forEach(function(f, i) {
+    html +=
+      '<div class="fragment-card" style="animation-delay:' + (i * 0.08) + 's">' +
+        '<div class="fragment-passage">' + esc(f.passage) + '</div>' +
+        '<div class="fragment-meta">' +
+          '<span class="meta-item"><strong>' + esc(f.book) + '</strong></span>' +
+          (f.time ? '<span class="meta-item">' + esc(f.time) + '</span>' : '') +
+          (f.mood ? '<span class="meta-mood">' + esc(f.mood) + '</span>' : '') +
+          (f.page ? '<span class="meta-item">' + esc(f.page) + '</span>' : '') +
+          (f.feeling ? '<div class="meta-feeling">' + esc(f.feeling) + '</div>' : '') +
+        '</div>' +
+      '</div>';
+  });
+
+  document.getElementById('fragmentList').innerHTML = html;
+}
+
+function esc(s) {
+  if (!s) return '';
+  var el = document.createElement('span');
+  el.textContent = s;
+  return el.innerHTML;
+}
+
+loadFragments();
+</script>
+</body>
+</html>

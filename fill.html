@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时空文学 · 种子碎片填写</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --paper: #faf7f0;
+  --ink: #2c2416;
+  --muted: #8a7e6d;
+  --accent: #8b4513;
+  --accent-light: #d4a76a;
+  --border: #d9cfc0;
+  --success: #4a7c59;
+  --error: #9e3a3a;
+  --shadow: rgba(44, 36, 22, 0.08);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.8;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  position: relative;
+  z-index: 1;
+}
+header {
+  text-align: center;
+  margin-bottom: 48px;
+  animation: fadeDown 0.8s ease;
+}
+header h1 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 2.4rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+header p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+header .divider {
+  width: 60px;
+  height: 1px;
+  background: var(--accent-light);
+  margin: 16px auto 0;
+}
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  animation: fadeDown 0.8s ease 0.2s both;
+}
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.progress-dot.filled {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+.progress-dot.current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15);
+}
+.form-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 36px 32px;
+  box-shadow: 0 2px 20px var(--shadow);
+  position: relative;
+  animation: fadeUp 0.6s ease;
+}
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent-light), var(--accent));
+}
+.card-counter {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+  text-align: right;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.form-group {
+  margin-bottom: 22px;
+}
+.form-group.full {
+  grid-column: 1 / -1;
+}
+label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+input, select, textarea {
+  width: 100%;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-bottom-color: var(--accent);
+}
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 2px;
+  line-height: 2;
+}
+textarea:focus {
+  border-color: var(--accent);
+}
+select {
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%238a7e6d' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  padding-right: 20px;
+}
+select option { font-family: 'Noto Serif SC', serif; }
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-prev {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.btn-prev:hover {
+  color: var(--ink);
+  border-color: var(--accent-light);
+}
+.btn-next {
+  background: var(--accent);
+  color: #faf7f0;
+}
+.btn-next:hover {
+  background: #6b3410;
+  letter-spacing: 0.16em;
+}
+.btn-skip {
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 8px 16px;
+}
+.btn-skip:hover { color: var(--accent); }
+.btn-submit {
+  background: var(--success);
+  color: #f0f7f2;
+}
+.btn-submit:hover {
+  background: #3a6647;
+  letter-spacing: 0.16em;
+}
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 14px 28px;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 100;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast.success { background: var(--success); color: #f0f7f2; }
+.toast.error { background: var(--error); color: #f7f0f0; }
+.summary { animation: fadeUp 0.6s ease; }
+.summary h2 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.summary .sub {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 32px;
+}
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 32px;
+}
+.summary-table th {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+}
+.summary-table td {
+  font-size: 0.85rem;
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(217,207,192,0.5);
+  vertical-align: top;
+}
+.summary-table tr:last-child td { border-bottom: none; }
+.summary-table .td-passage {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.btn-submit-all {
+  display: block;
+  width: 100%;
+  background: var(--success);
+  color: #faf7f0;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  padding: 16px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-submit-all:hover { background: #3a6647; letter-spacing: 0.18em; }
+.btn-submit-all:disabled { background: var(--border); cursor: not-allowed; }
+.btn-reset {
+  display: block;
+  margin: 16px auto 0;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+.btn-reset:hover { color: var(--accent); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .container { padding: 24px 16px 60px; }
+  header h1 { font-size: 1.8rem; }
+  .form-card { padding: 24px 20px; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .btn-row { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>时 空 文 学</h1>
+    <p>种子碎片 · 批量填写</p>
+    <div class="divider"></div>
+  </header>
+
+  <div class="progress-bar" id="progressBar"></div>
+  <div id="formArea"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var API_URL = 'https://script.google.com/macros/s/AKfycbzQuCZq0aUUHX4bT1HnACZPn7tRjqEktsuURSXJ3hcgV2KX_vYgeAsYX8pZoDMn7L-Msw/exec';
+
+var TOTAL = 30;
+var entries = [];
+var current = 0;
+
+var stageOptions = ['启蒙期', '成长期', '转折期', '成熟期', '沉淀期'];
+var moodOptions = ['平静', '温暖', '孤独', '振奋', '忧伤', '释然', '感动', '沉思', '愤怒', '敬畏'];
+
+function init() {
+  for (var i = 0; i < TOTAL; i++) {
+    entries.push({book:'',time:'',stage:'',mood:'',feeling:'',passage:'',page:''});
+  }
+  renderProgress();
+  renderForm();
+}
+
+function renderProgress() {
+  var bar = document.getElementById('progressBar');
+  var html = '';
+  for (var i = 0; i < TOTAL; i++) {
+    var cls = 'progress-dot';
+    if (entries[i].passage) cls += ' filled';
+    if (i === current) cls += ' current';
+    html += '<div class="' + cls + '" onclick="jumpTo(' + i + ')"></div>';
+  }
+  bar.innerHTML = html;
+}
+
+function renderForm() {
+  var area = document.getElementById('formArea');
+  var e = entries[current];
+  var filledCount = entries.filter(function(x) { return x.passage.trim() !== ''; }).length;
+
+  var stageOpts = '<option value="">选择阶段</option>';
+  stageOptions.forEach(function(s) {
+    stageOpts += '<option value="' + s + '"' + (e.stage === s ? ' selected' : '') + '>' + s + '</option>';
+  });
+
+  var moodOpts = '<option value="">选择心情</option>';
+  moodOptions.forEach(function(m) {
+    moodOpts += '<option value="' + m + '"' + (e.mood === m ? ' selected' : '') + '>' + m + '</option>';
+  });
+
+  area.innerHTML =
+    '<div class="form-card">' +
+      '<div class="card-counter">第 ' + (current + 1) + ' / ' + TOTAL + ' 条 &nbsp;·&nbsp; 已填 ' + filledCount + ' 条</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group">' +
+          '<label>书名</label>' +
+          '<input type="text" id="f_book" value="' + esc(e.book) + '" placeholder="如：百年孤独">' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label>时代</label>' +
+          '<input type="text" id="f_time" value="' + esc(e.time) + '" placeholder="如：20世纪60年代">' +
+        '</div>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group">' +
+          '<label>人生阶段</label>' +
+          '<select id="f_stage">' + stageOpts + '</select>' +
+        '</div>' +
+        '<div class="form-group">' +
+          '<label>心情</label>' +
+          '<select id="f_mood">' + moodOpts + '</select>' +
+        '</div>' +
+      '</div>' +
+      '<div class="form-group">' +
+        '<label>感受</label>' +
+        '<input type="text" id="f_feeling" value="' + esc(e.feeling) + '" placeholder="一句话描述读到这段文字时的感受">' +
+      '</div>' +
+      '<div class="form-group">' +
+        '<label>原文片段</label>' +
+        '<textarea id="f_passage" placeholder="粘贴书中原文...">' + esc(e.passage) + '</textarea>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<div class="form-group">' +
+          '<label>页码</label>' +
+          '<input type="text" id="f_page" value="' + esc(e.page) + '" placeholder="如：P128">' +
+        '</div>' +
+        '<div class="form-group"></div>' +
+      '</div>' +
+      '<div class="btn-row">' +
+        (current > 0 ? '<button class="btn btn-prev" onclick="prev()">← 上一条</button>' : '<div></div>') +
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">' +
+          (filledCount > 0
+            ? '<button class="btn btn-submit" onclick="showSummary()">提交已填的 ' + filledCount + ' 条</button>'
+            : '') +
+          '<button class="btn btn-skip" onclick="skip()">跳过</button>' +
+          (current < TOTAL - 1
+            ? '<button class="btn btn-next" onclick="next()">下一条 →</button>'
+            : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function saveCurrent() {
+  entries[current].book = gv('f_book');
+  entries[current].time = gv('f_time');
+  entries[current].stage = gv('f_stage');
+  entries[current].mood = gv('f_mood');
+  entries[current].feeling = gv('f_feeling');
+  entries[current].passage = gv('f_passage');
+  entries[current].page = gv('f_page');
+}
+
+function next() {
+  saveCurrent();
+  if (current < TOTAL - 1) current++;
+  renderProgress();
+  renderForm();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function prev() {
+  saveCurrent();
+  if (current > 0) current--;
+  renderProgress();
+  renderForm();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function skip() {
+  saveCurrent();
+  if (current < TOTAL - 1) current++;
+  renderProgress();
+  renderForm();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function jumpTo(idx) {
+  saveCurrent();
+  current = idx;
+  renderProgress();
+  renderForm();
+}
+
+function showSummary() {
+  saveCurrent();
+  var valid = entries.filter(function(e) { return e.passage.trim() !== ''; });
+  if (valid.length === 0) {
+    showToast('至少填写一条含有原文片段的碎片', 'error');
+    return;
+  }
+
+  var rows = '';
+  valid.forEach(function(e, i) {
+    rows += '<tr>' +
+      '<td>' + (i+1) + '</td>' +
+      '<td>' + esc(e.book) + '</td>' +
+      '<td>' + esc(e.mood) + '</td>' +
+      '<td class="td-passage">' + esc(e.passage.substring(0,40)) + '</td>' +
+    '</tr>';
+  });
+
+  document.getElementById('progressBar').style.display = 'none';
+  document.getElementById('formArea').innerHTML =
+    '<div class="summary">' +
+      '<h2>碎片汇总</h2>' +
+      '<p class="sub">共 ' + valid.length + ' 条有效碎片，确认后批量提交</p>' +
+      '<table class="summary-table">' +
+        '<thead><tr><th>#</th><th>书名</th><th>心情</th><th>片段</th></tr></thead>' +
+        '<tbody>' + rows + '</tbody>' +
+      '</table>' +
+      '<button class="btn-submit-all" onclick="submitAll()">全部提交到 Google Sheet</button>' +
+      '<button class="btn-reset" onclick="backToEdit()">返回修改</button>' +
+    '</div>';
+}
+
+function backToEdit() {
+  document.getElementById('progressBar').style.display = 'flex';
+  renderProgress();
+  renderForm();
+}
+
+function submitAll() {
+  var valid = entries.filter(function(e) { return e.passage.trim() !== ''; });
+  var btn = document.querySelector('.btn-submit-all');
+  btn.disabled = true;
+  btn.textContent = '提交中... 0/' + valid.length;
+
+  var done = 0;
+  var failed = 0;
+
+  valid.forEach(function(entry) {
+    fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        book: entry.book,
+        time: entry.time,
+        stage: entry.stage,
+        mood: entry.mood,
+        feeling: entry.feeling,
+        passage: entry.passage,
+        page: entry.page,
+        date: new Date().toLocaleString('zh-CN')
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      done++;
+      btn.textContent = '提交中... ' + done + '/' + valid.length;
+      if (done + failed === valid.length) finishSubmit(done, failed);
+    })
+    .catch(function() {
+      failed++;
+      if (done + failed === valid.length) finishSubmit(done, failed);
+    });
+  });
+}
+
+function finishSubmit(success, fail) {
+  var btn = document.querySelector('.btn-submit-all');
+  if (fail === 0) {
+    showToast('全部 ' + success + ' 条提交成功', 'success');
+    btn.textContent = '提交完成 ✓';
+  } else {
+    showToast(success + ' 条成功，' + fail + ' 条失败', 'error');
+    btn.textContent = success + ' 成功 / ' + fail + ' 失败';
+  }
+}
+
+function gv(id) {
+  var el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function esc(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type + ' show';
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+init();
+</script>
+</body>
+</html>
