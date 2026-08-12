@@ -1,434 +1,576 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>时空文学 — 那些跨越时空的文字碎片</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0c0a08;
-  --surface: #1a1714;
-  --paper: #f5f0e6;
-  --ink: #f0ece4;
-  --muted: #7a756d;
-  --accent: #c9a96e;
-  --accent-dim: #8a7448;
-  --border: #2a2520;
-  --gold: #d4a849;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Noto Serif SC', serif;
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.9;
-  overflow-x: hidden;
-}
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background: radial-gradient(ellipse at 20% 30%, rgba(201,169,110,0.03) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 70%, rgba(139,90,43,0.02) 0%, transparent 50%);
-  pointer-events: none;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时空文学 — 同一本书，不同的人生</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Noto+Serif+SC:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0e0c09;
+            --bg-subtle: #13110f;
+            --surface: #1a1714;
+            --surface-elevated: #211e19;
+            --surface-hover: #2a2620;
+            --accent: #c49a6c;
+            --accent-glow: rgba(196, 154, 108, 0.35);
+            --accent-dim: #7a6040;
+            --accent-bright: #dbb78a;
+            --text-primary: #e8dfd3;
+            --text-secondary: #b0a393;
+            --text-muted: #6b6058;
+            --border: #252119;
+            --border-light: #302b24;
+            --passage-bg: #15120f;
+            --passage-border: #2a2419;
+            --font-display: 'Playfair Display', 'STSong', 'Songti SC', 'SimSun', serif;
+            --font-body: 'Source Serif 4', 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+            --font-mono: 'DM Mono', 'Noto Serif SC', monospace;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.03; pointer-events: none; z-index: 9999;
+        }
+        ::selection { background: var(--accent); color: var(--bg); }
 
-/* ====== HERO ====== */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 24px;
-  position: relative;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 10%; right: 10%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--accent-dim), transparent);
-}
-.hero h1 {
-  font-family: 'ZCOOL XiaoWei', serif;
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  color: var(--ink);
-  margin-bottom: 20px;
-  animation: fadeUp 1s ease;
-}
-.hero .subtitle {
-  font-size: clamp(0.85rem, 2vw, 1.1rem);
-  color: var(--muted);
-  letter-spacing: 0.15em;
-  max-width: 500px;
-  margin-bottom: 12px;
-  animation: fadeUp 1s ease 0.3s both;
-}
-.hero .count-line {
-  font-size: 0.78rem;
-  color: var(--accent-dim);
-  letter-spacing: 0.2em;
-  margin-bottom: 48px;
-  animation: fadeUp 1s ease 0.5s both;
-}
-.hero .count-line span {
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-.hero-nav {
-  display: flex;
-  gap: 24px;
-  animation: fadeUp 1s ease 0.7s both;
-}
-.hero-nav a {
-  font-size: 0.8rem;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 0.12em;
-  padding: 10px 24px;
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
-}
-.hero-nav a:hover {
-  color: var(--accent);
-  border-color: var(--accent-dim);
-}
-.hero-nav a.primary {
-  background: var(--accent);
-  color: var(--bg);
-  border-color: var(--accent);
-  font-weight: 500;
-}
-.hero-nav a.primary:hover {
-  background: var(--gold);
-  letter-spacing: 0.18em;
-}
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(to bottom, var(--bg), transparent);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        }
+        .nav-logo { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--accent); letter-spacing: 0.15em; }
+        .nav-tagline { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.08em; font-style: italic; font-family: var(--font-display); }
 
-/* ====== FILTERS ====== */
-.filters {
-  padding: 40px 24px 0;
-  max-width: 900px;
-  margin: 0 auto;
-  animation: fadeUp 0.8s ease;
-}
-.filter-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 12px;
-}
-.filter-label {
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  align-self: center;
-  margin-right: 4px;
-  min-width: 40px;
-}
-.filter-btn {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 0.75rem;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid var(--border);
-  padding: 5px 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  letter-spacing: 0.06em;
-}
-.filter-btn:hover { color: var(--ink); border-color: var(--accent-dim); }
-.filter-btn.active {
-  color: var(--bg);
-  background: var(--accent);
-  border-color: var(--accent);
-}
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 6rem 2rem 4rem; position: relative;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(196,154,108,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 70%, rgba(196,154,108,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-quote {
+            font-family: var(--font-display); font-style: italic;
+            font-size: clamp(1rem, 2.2vw, 1.4rem);
+            color: var(--text-secondary); max-width: 640px; line-height: 2.1;
+            margin-bottom: 4rem; opacity: 0; animation: fadeUp 1.5s ease 0.5s forwards;
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 700;
+            color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1rem;
+            opacity: 0; animation: fadeUp 1.2s ease 1.5s forwards;
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--text-muted);
+            letter-spacing: 0.25em; font-weight: 300;
+            opacity: 0; animation: fadeUp 1.2s ease 2s forwards;
+        }
+        .hero-line {
+            width: 1px; height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent); margin-top: 3rem;
+            opacity: 0; animation: fadeUp 1s ease 2.5s forwards;
+        }
+        .scroll-hint {
+            position: absolute; bottom: 2.5rem;
+            font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.2em;
+            opacity: 0; animation: fadeUp 1s ease 3s forwards, pulse 2s ease-in-out 4s infinite;
+        }
 
-/* ====== FRAGMENTS ====== */
-.fragments {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
-}
+        /* COMMON */
+        section { padding: 6rem 2rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .section-label { font-family: var(--font-display); font-size: 0.75rem; color: var(--accent-dim); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.75rem; }
+        .section-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; }
+        .section-desc { font-size: 1rem; color: var(--text-secondary); max-width: 560px; line-height: 1.9; font-weight: 300; }
+        .divider { width: 40px; height: 1px; background: var(--accent-dim); margin: 3rem 0; }
 
-.fragment-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 40px 36px;
-  margin-bottom: 32px;
-  position: relative;
-  animation: fadeUp 0.6s ease both;
-  transition: border-color 0.3s ease;
-}
-.fragment-card:hover {
-  border-color: var(--accent-dim);
-}
-.fragment-card::before {
-  content: '"';
-  position: absolute;
-  top: 16px; left: 20px;
-  font-family: 'ZCOOL XiaoWei', serif;
-  font-size: 4rem;
-  color: var(--accent-dim);
-  opacity: 0.25;
-  line-height: 1;
-}
-.fragment-passage {
-  font-size: 1.05rem;
-  line-height: 2.2;
-  color: var(--ink);
-  margin-bottom: 24px;
-  text-indent: 2em;
-  padding-left: 16px;
-}
-.fragment-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-.meta-item {
-  font-size: 0.72rem;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-}
-.meta-item strong {
-  color: var(--accent);
-  font-weight: 500;
-}
-.meta-mood {
-  font-size: 0.72rem;
-  color: var(--accent-dim);
-  border: 1px solid var(--accent-dim);
-  padding: 2px 10px;
-  letter-spacing: 0.08em;
-}
-.meta-feeling {
-  font-size: 0.82rem;
-  color: var(--muted);
-  font-style: italic;
-  width: 100%;
-  margin-top: 8px;
-}
+        /* BOOK DETAIL */
+        .book-section { background: var(--bg-subtle); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .book-header { display: flex; gap: 3rem; align-items: flex-start; margin-bottom: 4rem; }
+        .book-cover {
+            width: 180px; min-width: 180px; height: 260px;
+            background: linear-gradient(135deg, var(--surface-elevated), var(--surface));
+            border: 1px solid var(--border-light); border-radius: 2px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 2rem 1.5rem; text-align: center; position: relative; overflow: hidden;
+        }
+        .book-cover::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent); }
+        .book-cover-title { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .book-cover-author { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+        .book-info h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+        .book-meta { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; font-style: italic; font-family: var(--font-display); }
+        .book-intro { font-size: 1rem; color: var(--text-secondary); line-height: 2; max-width: 520px; font-weight: 300; }
+        .book-stats { display: flex; gap: 2.5rem; margin-top: 2rem; }
+        .stat-item { text-align: center; }
+        .stat-number { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; color: var(--accent); }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; }
 
-/* ====== LOADING ====== */
-.loading {
-  text-align: center;
-  padding: 80px 24px;
-  color: var(--muted);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-}
-.loading .dots::after {
-  content: '';
-  animation: dots 1.5s steps(4, end) infinite;
-}
-@keyframes dots {
-  0% { content: ''; }
-  25% { content: '.'; }
-  50% { content: '..'; }
-  75% { content: '...'; }
-}
+        /* COORDINATE GRID */
+        .grid-section { padding: 4rem 0; }
+        .grid-header { margin-bottom: 2.5rem; }
+        .coord-grid-wrapper { overflow-x: auto; padding-bottom: 1rem; }
+        .coord-grid { display: grid; grid-template-columns: 60px repeat(10, 1fr); gap: 0; min-width: 600px; align-items: center; }
+        .col-label { font-size: 0.7rem; color: var(--text-muted); text-align: center; padding: 0.5rem 0; letter-spacing: 0.05em; }
+        .row-label { font-size: 0.75rem; color: var(--text-muted); padding-right: 1rem; text-align: right; letter-spacing: 0.05em; }
+        .grid-dot { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-light); transition: all 0.3s ease; cursor: default; position: relative; }
+        .dot.active { background: var(--accent); box-shadow: 0 0 12px var(--accent-glow), 0 0 4px var(--accent-glow); cursor: pointer; animation: breathe 3s ease-in-out infinite; }
+        .dot.active:hover { transform: scale(1.6); box-shadow: 0 0 20px var(--accent-glow), 0 0 8px var(--accent-glow); }
+        .dot-tooltip { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--surface-elevated); border: 1px solid var(--border-light); padding: 0.4rem 0.8rem; border-radius: 3px; font-size: 0.7rem; color: var(--text-secondary); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .dot.active:hover .dot-tooltip { opacity: 1; }
+        .grid-legend { display: flex; gap: 2rem; margin-top: 1.5rem; padding-left: 60px; }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; color: var(--text-muted); }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .legend-dot.lit { background: var(--accent); box-shadow: 0 0 6px var(--accent-glow); }
+        .legend-dot.dim { background: var(--border-light); }
 
-.empty {
-  text-align: center;
-  padding: 80px 24px;
-  color: var(--muted);
-  font-size: 0.9rem;
-  letter-spacing: 0.08em;
-}
+        /* FRAGMENTS */
+        .fragments-section { padding: 4rem 0 0; }
+        .fragments-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1.75rem; margin-top: 2.5rem; }
+        .fragment-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
+            overflow: hidden; transition: all 0.4s ease; opacity: 0; transform: translateY(20px);
+        }
+        .fragment-card.visible { opacity: 1; transform: translateY(0); }
+        .fragment-card:hover { border-color: var(--border-light); box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
+        .fragment-feeling { padding: 2rem 2rem 1.5rem; position: relative; }
+        .fragment-feeling::before { content: ''; position: absolute; top: 0; left: 2rem; right: 2rem; height: 1px; background: linear-gradient(to right, transparent, var(--accent-dim), transparent); }
+        .fragment-coord { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .coord-tag { font-size: 0.65rem; padding: 0.2rem 0.65rem; border-radius: 2px; letter-spacing: 0.08em; font-family: var(--font-body); }
+        .coord-tag.time { background: rgba(196,154,108,0.15); color: var(--accent); }
+        .coord-tag.stage { background: rgba(196,154,108,0.1); color: var(--accent-dim); }
+        .coord-tag.mood { background: rgba(196,154,108,0.08); color: var(--text-muted); }
+        .fragment-text { font-size: 1rem; line-height: 2; color: var(--text-primary); font-weight: 300; }
+        .fragment-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+        .fragment-date { font-family: var(--font-display); font-style: italic; font-size: 0.8rem; color: var(--text-muted); }
+        .fragment-connector { display: flex; align-items: center; gap: 0.75rem; padding: 0 2rem; }
+        .connector-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--accent-dim), transparent); }
+        .connector-icon { font-size: 0.7rem; color: var(--accent-dim); letter-spacing: 0.15em; font-family: var(--font-mono); white-space: nowrap; }
+        .fragment-passage { background: var(--passage-bg); border-top: 1px solid var(--passage-border); padding: 1.75rem 2rem; position: relative; }
+        .passage-label { font-size: 0.65rem; color: var(--accent-dim); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; font-family: var(--font-mono); }
+        .passage-source { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic; font-family: var(--font-display); }
+        .passage-text { font-size: 0.95rem; line-height: 2.1; color: var(--text-secondary); font-weight: 300; font-style: italic; position: relative; padding-left: 1.25rem; border-left: 2px solid var(--accent-dim); }
+        .passage-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
+        .passage-chapter { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0.05em; }
+        .no-passage { padding: 1.5rem 2rem; background: var(--passage-bg); border-top: 1px solid var(--passage-border); text-align: center; font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
 
-/* ====== CONTRIBUTE CTA ====== */
-.cta {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 24px 100px;
-  text-align: center;
-}
-.cta-box {
-  border: 1px solid var(--accent-dim);
-  padding: 48px 36px;
-  position: relative;
-}
-.cta-box h2 {
-  font-family: 'ZCOOL XiaoWei', serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  margin-bottom: 12px;
-}
-.cta-box p {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 28px;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.cta-box a {
-  display: inline-block;
-  font-family: 'Noto Serif SC', serif;
-  font-size: 0.85rem;
-  color: var(--bg);
-  background: var(--accent);
-  text-decoration: none;
-  padding: 14px 36px;
-  letter-spacing: 0.12em;
-  transition: all 0.3s ease;
-}
-.cta-box a:hover {
-  background: var(--gold);
-  letter-spacing: 0.18em;
-}
+        /* CONTRIBUTE */
+        .contribute-section { background: var(--bg-subtle); border-top: 1px solid var(--border); text-align: center; padding: 6rem 2rem; }
+        .contribute-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; }
+        .contribute-desc { font-size: 1rem; color: var(--text-muted); margin-bottom: 3rem; font-weight: 300; }
+        .contribute-form { max-width: 640px; margin: 0 auto; text-align: left; }
+        .step-group { margin-bottom: 2rem; }
+        .step-label { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem; font-weight: 400; }
+        .step-label span { color: var(--accent-dim); font-size: 0.7rem; margin-right: 0.4rem; }
+        .tag-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag-option { font-size: 0.8rem; padding: 0.45rem 1rem; border: 1px solid var(--border-light); border-radius: 2px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.25s ease; font-family: var(--font-body); letter-spacing: 0.03em; }
+        .tag-option:hover { border-color: var(--accent-dim); color: var(--text-secondary); }
+        .tag-option.selected { background: rgba(196,154,108,0.15); border-color: var(--accent); color: var(--accent); }
+        .contribute-textarea { width: 100%; min-height: 140px; background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 1.5rem; font-family: var(--font-body); font-size: 1rem; color: var(--text-primary); line-height: 2; resize: vertical; outline: none; transition: border-color 0.3s ease; }
+        .contribute-textarea:focus { border-color: var(--accent-dim); }
+        .contribute-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+        .passage-link-section { margin-top: 1.5rem; padding: 1.5rem; background: var(--passage-bg); border: 1px dashed var(--border-light); border-radius: 3px; }
+        .passage-link-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .passage-link-label { font-size: 0.8rem; color: var(--text-secondary); }
+        .passage-link-label span { color: var(--accent-dim); font-size: 0.7rem; margin-right: 0.4rem; }
+        .passage-link-optional { font-size: 0.65rem; color: var(--text-muted); font-style: italic; }
+        .passage-link-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; font-weight: 300; }
+        .passage-input-area { width: 100%; min-height: 100px; background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 1.25rem; font-family: var(--font-body); font-size: 0.95rem; color: var(--text-secondary); line-height: 2; resize: vertical; outline: none; font-style: italic; transition: border-color 0.3s ease; }
+        .passage-input-area:focus { border-color: var(--accent-dim); }
+        .passage-input-area::placeholder { color: var(--text-muted); font-style: italic; }
+        .passage-input-footer { display: flex; gap: 1rem; margin-top: 0.75rem; align-items: center; }
+        .passage-page-input { width: 100px; background: var(--surface); border: 1px solid var(--border); border-radius: 2px; padding: 0.4rem 0.75rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); outline: none; transition: border-color 0.3s ease; }
+        .passage-page-input:focus { border-color: var(--accent-dim); }
+        .contribute-input { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.9rem; color: var(--text-primary); outline: none; transition: border-color 0.3s ease; }
+        .contribute-input:focus { border-color: var(--accent-dim); }
+        .contribute-input::placeholder { color: var(--text-muted); font-style: italic; }
+        .textarea-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+        .char-count { font-size: 0.75rem; color: var(--text-muted); }
+        .submit-btn { font-family: var(--font-display); font-size: 0.9rem; padding: 0.75rem 2.5rem; background: var(--accent); color: var(--bg); border: none; border-radius: 2px; cursor: pointer; letter-spacing: 0.12em; transition: all 0.3s ease; font-weight: 600; margin-top: 2rem; }
+        .submit-btn:hover { background: var(--accent-bright); letter-spacing: 0.18em; }
+        .submit-btn:disabled { background: var(--border-light); cursor: not-allowed; }
+        .submit-feedback { font-size: 0.85rem; color: var(--accent); margin-top: 0.75rem; opacity: 0; transition: opacity 0.3s ease; text-align: center; }
+        .submit-feedback.show { opacity: 1; }
 
-/* ====== FOOTER ====== */
-footer {
-  text-align: center;
-  padding: 32px 24px;
-  border-top: 1px solid var(--border);
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-}
+        /* LIBRARY */
+        .library-section { padding: 6rem 2rem; text-align: center; }
+        .library-scroll { display: flex; gap: 1.25rem; overflow-x: auto; padding: 2rem 0; margin-top: 2.5rem; scrollbar-width: thin; scrollbar-color: var(--border-light) transparent; }
+        .library-scroll::-webkit-scrollbar { height: 4px; }
+        .library-scroll::-webkit-scrollbar-track { background: transparent; }
+        .library-scroll::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+        .book-card { min-width: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 3px; padding: 1.5rem; text-align: left; transition: all 0.3s ease; cursor: pointer; flex-shrink: 0; }
+        .book-card:hover { border-color: var(--accent-dim); transform: translateY(-3px); }
+        .book-card-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.4rem; }
+        .book-card-count { font-size: 0.7rem; color: var(--accent-dim); margin-top: 0.75rem; letter-spacing: 0.05em; }
 
-/* ====== ANIMATIONS ====== */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+        /* FOOTER */
+        footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+        .footer-logo { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 1rem; }
+        .footer-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; max-width: 400px; margin: 0 auto; font-weight: 300; }
+        .footer-copy { font-size: 0.7rem; color: var(--text-muted); margin-top: 2rem; opacity: 0.5; }
 
-@media (max-width: 600px) {
-  .fragment-card { padding: 28px 20px; }
-  .hero-nav { flex-direction: column; gap: 12px; }
-  .hero-nav a { text-align: center; }
-  .fragment-meta { gap: 10px; }
-}
-</style>
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes breathe { 0%, 100% { box-shadow: 0 0 8px var(--accent-glow); } 50% { box-shadow: 0 0 18px var(--accent-glow), 0 0 4px var(--accent-glow); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-tagline { display: none; }
+            section { padding: 4rem 1.25rem; }
+            .book-header { flex-direction: column; gap: 2rem; align-items: center; text-align: center; }
+            .book-cover { width: 140px; min-width: 140px; height: 200px; }
+            .book-intro { text-align: center; margin: 0 auto; }
+            .book-stats { justify-content: center; }
+            .fragments-grid { grid-template-columns: 1fr; }
+            .coord-grid { min-width: 520px; }
+            .grid-legend { padding-left: 0; justify-content: center; }
+            .tag-options { justify-content: center; }
+            .passage-input-footer { flex-direction: column; }
+            .passage-page-input { width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-<section class="hero">
-  <h1>时 空 文 学</h1>
-  <p class="subtitle">每一段文字都是穿越时空的信使<br>它在某个人的生命里等你</p>
-  <p class="count-line">已收录 <span id="totalCount">·</span> 条碎片</p>
-  <nav class="hero-nav">
-    <a href="#fragments">浏览碎片</a>
-    <a href="#contribute" class="primary">贡献一条</a>
-  </nav>
-</section>
+    <nav>
+        <div class="nav-logo">时空文学</div>
+        <div class="nav-tagline">"同一本书，不同的人生"</div>
+    </nav>
 
-<section class="filters" id="fragments">
-  <div class="filter-row">
-    <span class="filter-label">心情</span>
-    <div id="moodFilters"></div>
-  </div>
-</section>
+    <section class="hero">
+        <div class="hero-quote">"每一段文字都是穿越时空的信使，它在某个人的生命里等你。"</div>
+        <div class="hero-title">时空文学</div>
+        <div class="hero-subtitle">同一本书 &nbsp; 不同的人生</div>
+        <div class="hero-line"></div>
+        <div class="scroll-hint">向下探索</div>
+    </section>
 
-<section class="fragments" id="fragmentList">
-  <div class="loading">正在加载碎片<span class="dots"></span></div>
-</section>
+    <section class="book-section">
+        <div class="container">
+            <div class="book-header">
+                <div class="book-cover">
+                    <div class="book-cover-title" id="coverTitle">·</div>
+                    <div class="book-cover-author" id="coverAuthor">Loading</div>
+                </div>
+                <div class="book-info">
+                    <h1 id="bookTitle">加载中</h1>
+                    <div class="book-meta" id="bookMeta"></div>
+                    <div class="book-intro" id="bookIntro">正在从时空深处打捞碎片...</div>
+                    <div class="book-stats">
+                        <div class="stat-item"><div class="stat-number" id="statTotal">-</div><div class="stat-label">条记录</div></div>
+                        <div class="stat-item"><div class="stat-number" id="statBooks">-</div><div class="stat-label">本书</div></div>
+                        <div class="stat-item"><div class="stat-number" id="statCoords">-</div><div class="stat-label">个坐标</div></div>
+                    </div>
+                </div>
+            </div>
 
-<section class="cta" id="contribute">
-  <div class="cta-box">
-    <h2>你也有一段这样的文字吗</h2>
-    <p>它曾在某个深夜击中你，从此住在你的记忆里。把它带来，让更多人遇见它。</p>
-    <a href="fill.html">贡献一条碎片</a>
-  </div>
-</section>
+            <div class="grid-section">
+                <div class="grid-header">
+                    <div class="section-label">时空坐标</div>
+                    <div class="section-desc" style="font-size:0.9rem;">每一个亮点，都是一个人在某个时空与这些书相遇的痕迹。</div>
+                </div>
+                <div class="coord-grid-wrapper"><div class="coord-grid" id="coordGrid"></div></div>
+                <div class="grid-legend">
+                    <div class="legend-item"><div class="legend-dot lit"></div><span>有记录</span></div>
+                    <div class="legend-item"><div class="legend-dot dim"></div><span>等待书写</span></div>
+                </div>
+            </div>
 
-<footer>
-  时 空 文 学 &nbsp;·&nbsp; 每一段跨越时空的文字都值得被看见
-</footer>
+            <div class="fragments-section">
+                <div class="divider" style="margin: 3rem auto;"></div>
+                <div class="section-label">读者的一念</div>
+                <div class="section-title" style="font-size: 1.5rem;">他们的感受，连着那一段原文</div>
+                <div class="fragments-grid" id="fragmentsGrid">
+                    <div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:2rem;">加载中...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contribute-section">
+        <div class="container">
+            <div class="contribute-title">写下你的一念</div>
+            <div class="contribute-desc">不需要完整，不需要深刻。你和那本书相遇的那一刻，就够了。</div>
+            <div class="contribute-form">
+                <div class="step-group">
+                    <div class="step-label"><span>01</span> 书名</div>
+                    <input type="text" class="contribute-input" id="inputBook" placeholder="如：百年孤独">
+                </div>
+                <div class="step-group">
+                    <div class="step-label"><span>02</span> 你和这本书的关系是</div>
+                    <div class="tag-options" data-step="time">
+                        <button class="tag-option" data-value="初读">初读</button>
+                        <button class="tag-option" data-value="重读">重读</button>
+                        <button class="tag-option" data-value="偶遇">偶遇</button>
+                    </div>
+                </div>
+                <div class="step-group">
+                    <div class="step-label"><span>03</span> 你在</div>
+                    <div class="tag-options" data-step="stage">
+                        <button class="tag-option" data-value="年少">年少</button>
+                        <button class="tag-option" data-value="青年">青年</button>
+                        <button class="tag-option" data-value="中年">中年</button>
+                        <button class="tag-option" data-value="暮年">暮年</button>
+                    </div>
+                </div>
+                <div class="step-group">
+                    <div class="step-label"><span>04</span> 翻开它的那一刻</div>
+                    <div class="tag-options" data-step="mood">
+                        <button class="tag-option" data-value="好奇">好奇</button>
+                        <button class="tag-option" data-value="渴望">渴望</button>
+                        <button class="tag-option" data-value="失去">失去</button>
+                        <button class="tag-option" data-value="孤独">孤独</button>
+                        <button class="tag-option" data-value="愤怒">愤怒</button>
+                        <button class="tag-option" data-value="困惑">困惑</button>
+                        <button class="tag-option" data-value="平静">平静</button>
+                        <button class="tag-option" data-value="释然">释然</button>
+                        <button class="tag-option" data-value="重逢">重逢</button>
+                        <button class="tag-option" data-value="求生">求生</button>
+                    </div>
+                </div>
+                <div class="step-group">
+                    <div class="step-label"><span>05</span> 你的感受</div>
+                    <textarea class="contribute-textarea" id="fragmentInput" placeholder="写下那一刻的念头，200字以内……" maxlength="200"></textarea>
+                    <div class="textarea-footer"><span class="char-count"><span id="charCount">0</span> / 200</span></div>
+                </div>
+                <div class="step-group">
+                    <div class="passage-link-section">
+                        <div class="passage-link-header">
+                            <div class="passage-link-label"><span>06</span> 是哪一段原文触动了你</div>
+                            <div class="passage-link-optional">选填</div>
+                        </div>
+                        <div class="passage-link-desc">如果你记得是书中的哪一段让你停下来，请把那段文字抄录在这里。它会和你的感受一起，成为后来读者进入原著的一扇门。</div>
+                        <textarea class="passage-input-area" id="passageInput" placeholder="抄录触动你的那段原文……"></textarea>
+                        <div class="passage-input-footer">
+                            <input type="text" class="passage-page-input" placeholder="页码" id="pageInput">
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <button class="submit-btn" id="submitBtn">留下一念</button>
+                    <div class="submit-feedback" id="submitFeedback"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="library-section">
+        <div class="container">
+            <div class="section-label">更多书籍</div>
+            <div class="section-title" style="font-size: 1.5rem;">在另一本书里，遇见另一个自己</div>
+            <div class="library-scroll" id="libraryScroll">
+                <div style="color:var(--text-muted);padding:2rem;">加载中...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">时空文学</div>
+        <div class="footer-text">一本书不是在出版那一刻完成的。<br>它在每一次被不同的人、<br>在不同的时空读到的那一刻，<br>才真正完成。</div>
+        <div class="footer-copy">TIME-SPACE LITERATURE &copy; 2025</div>
+    </footer>
 
 <script>
 var API_URL = 'https://script.google.com/macros/s/AKfycbw3omnz0nJYA_E-Z5ayZF41YqcaTttYrccGmO_r-KqTaNOE4KPMoCRtO3rRHpMxw_mbaA/exec';
-
+var stageOptions = ['年少','青年','中年','暮年'];
+var moodOptions = ['好奇','渴望','失去','孤独','愤怒','困惑','平静','释然','重逢','求生'];
+var stageMap = {'启蒙期':'年少','成长期':'青年','转折期':'中年','成熟期':'暮年','沉淀期':'暮年'};
 var allFragments = [];
-var currentMood = '全部';
 
-function loadFragments() {
-  fetch(API_URL + '?status=已发布')
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      allFragments = d.fragments || [];
-      document.getElementById('totalCount').textContent = allFragments.length;
-      buildFilters();
-      render();
-    })
-    .catch(function() {
-      document.getElementById('fragmentList').innerHTML =
-        '<div class="empty">加载失败，请稍后再试</div>';
+function esc(s) { if(!s)return''; var el=document.createElement('span'); el.textContent=s; return el.innerHTML; }
+
+function loadData() {
+    fetch(API_URL + '?status=all')
+        .then(function(r){return r.json();})
+        .then(function(d){
+            allFragments = (d.fragments||[]).map(function(f){ f.normStage = stageMap[f.stage]||f.stage||''; return f; });
+            var published = allFragments.filter(function(f){return f.status==='已发布';});
+            renderBookSection(published);
+            renderGrid(published);
+            renderFragments(published);
+            renderLibrary();
+        })
+        .catch(function(){
+            document.getElementById('fragmentsGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:2rem;">加载失败</div>';
+        });
+}
+
+function renderBookSection(frags) {
+    var books = {};
+    frags.forEach(function(f){ if(f.book) books[f.book]=(books[f.book]||0)+1; });
+    var bookNames = Object.keys(books);
+    var topBook = bookNames.sort(function(a,b){return books[b]-books[a];})[0]||'时空文学';
+    var coords = {};
+    frags.forEach(function(f){ var k=(f.normStage||'')+'|'+(f.mood||''); if(k!=='|') coords[k]=true; });
+    document.getElementById('coverTitle').textContent = topBook.substring(0,4);
+    document.getElementById('coverAuthor').textContent = topBook;
+    document.getElementById('bookTitle').textContent = topBook;
+    document.getElementById('bookMeta').textContent = '共 '+frags.length+' 条碎片 · 来自 '+bookNames.length+' 本书';
+    document.getElementById('bookIntro').textContent = '每一本书都在等待不同的人、在不同的时空来阅读。这些碎片记录了每一次相遇的瞬间——那些文字击中读者心灵的时刻。';
+    document.getElementById('statTotal').textContent = frags.length;
+    document.getElementById('statBooks').textContent = bookNames.length;
+    document.getElementById('statCoords').textContent = Object.keys(coords).length;
+}
+
+function renderGrid(frags) {
+    var coordCounts = {};
+    frags.forEach(function(f){
+        var si=stageOptions.indexOf(f.normStage), mi=moodOptions.indexOf(f.mood);
+        if(si>=0&&mi>=0){ var k=si+'-'+mi; coordCounts[k]=(coordCounts[k]||0)+1; }
     });
+    var grid=document.getElementById('coordGrid');
+    var h='<div class="corner"></div>';
+    moodOptions.forEach(function(m){h+='<div class="col-label">'+m+'</div>';});
+    stageOptions.forEach(function(stage,si){
+        h+='<div class="row-label">'+stage+'</div>';
+        moodOptions.forEach(function(mood,mi){
+            var k=si+'-'+mi, c=coordCounts[k];
+            var cls=c?'dot active':'dot';
+            var tip=c?'<div class="dot-tooltip">'+stage+' · '+mood+' · '+c+'条</div>':'';
+            h+='<div class="grid-dot"><div class="'+cls+'">'+tip+'</div></div>';
+        });
+    });
+    grid.innerHTML=h;
 }
 
-function buildFilters() {
-  var moods = {};
-  allFragments.forEach(function(f) {
-    if (f.mood) moods[f.mood] = (moods[f.mood] || 0) + 1;
-  });
+function renderFragments(frags) {
+    var grid = document.getElementById('fragmentsGrid');
+    if(frags.length===0){ grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:2rem;">还没有碎片，快来写下第一念吧</div>'; return; }
+    var h='';
+    frags.forEach(function(f,i){
+        var hasPassage = f.passage && f.passage.trim();
+        var source = '';
+        if(f.book) source += '《'+esc(f.book)+'》';
+        if(f.page) source += ' · '+esc(f.page);
 
-  var container = document.getElementById('moodFilters');
-  var html = '<button class="filter-btn active" onclick="filterMood(\'全部\', this)">全部</button>';
-  Object.keys(moods).forEach(function(m) {
-    html += '<button class="filter-btn" onclick="filterMood(\'' + m + '\', this)">' + m + ' ' + moods[m] + '</button>';
-  });
-  container.innerHTML = html;
+        h+='<div class="fragment-card" style="transition-delay:'+(i*0.08)+'s">';
+        h+='<div class="fragment-feeling">';
+        h+='<div class="fragment-coord">';
+        if(f.time) h+='<span class="coord-tag time">'+esc(f.time)+'</span>';
+        if(f.normStage) h+='<span class="coord-tag stage">'+esc(f.normStage)+'</span>';
+        if(f.mood) h+='<span class="coord-tag mood">'+esc(f.mood)+'</span>';
+        h+='</div>';
+        h+='<div class="fragment-text">'+esc(f.feeling || f.passage || '')+'</div>';
+        h+='<div class="fragment-meta"><div class="fragment-date">'+esc(f.date||'')+'</div></div>';
+        h+='</div>';
+
+        if(hasPassage){
+            h+='<div class="fragment-connector"><div class="connector-line"></div><div class="connector-icon">触动于 ↓</div><div class="connector-line"></div></div>';
+            h+='<div class="fragment-passage">';
+            h+='<div class="passage-label">原著段落</div>';
+            if(source) h+='<div class="passage-source">'+source+'</div>';
+            h+='<div class="passage-text">'+esc(f.passage)+'</div>';
+            h+='</div>';
+        } else {
+            h+='<div class="no-passage">暂未关联原著段落</div>';
+        }
+
+        h+='</div>';
+    });
+    grid.innerHTML=h;
+
+    setTimeout(function(){
+        var obs = new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){ entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+            });
+        },{threshold:0.1});
+        document.querySelectorAll('.fragment-card').forEach(function(c){obs.observe(c);});
+    },100);
 }
 
-function filterMood(mood, btn) {
-  currentMood = mood;
-  document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-  render();
+function renderLibrary() {
+    var books = {};
+    allFragments.forEach(function(f){ if(f.book && f.status==='已发布') books[f.book]=(books[f.book]||0)+1; });
+    var scroll = document.getElementById('libraryScroll');
+    var names = Object.keys(books);
+    if(names.length===0){ scroll.innerHTML='<div style="color:var(--text-muted);padding:2rem;">暂无书籍</div>'; return; }
+    var h='';
+    names.sort(function(a,b){return books[b]-books[a];}).forEach(function(name){
+        h+='<div class="book-card"><div class="book-card-title">'+esc(name)+'</div><div class="book-card-count">'+books[name]+' 条记录</div></div>';
+    });
+    scroll.innerHTML=h;
 }
 
-function render() {
-  var filtered = currentMood === '全部'
-    ? allFragments
-    : allFragments.filter(function(f) { return f.mood === currentMood; });
+// CONTRIBUTE
+document.querySelectorAll('.tag-option').forEach(function(btn){
+    btn.addEventListener('click',function(){
+        var group=this.closest('.tag-options');
+        group.querySelectorAll('.tag-option').forEach(function(b){b.classList.remove('selected');});
+        this.classList.add('selected');
+    });
+});
+var textarea=document.getElementById('fragmentInput');
+var charCount=document.getElementById('charCount');
+textarea.addEventListener('input',function(){charCount.textContent=textarea.value.length;});
 
-  if (filtered.length === 0) {
-    document.getElementById('fragmentList').innerHTML =
-      '<div class="empty">暂无此分类的碎片</div>';
-    return;
-  }
+document.getElementById('submitBtn').addEventListener('click',function(){
+    var book=document.getElementById('inputBook').value.trim();
+    var time='',stage='',mood='';
+    document.querySelectorAll('.tag-options').forEach(function(g){
+        var s=g.dataset.step, a=g.querySelector('.selected');
+        if(a){ if(s==='time')time=a.dataset.value; if(s==='stage')stage=a.dataset.value; if(s==='mood')mood=a.dataset.value; }
+    });
+    if(!book){alert('请填写书名');return;}
+    if(!time||!stage||!mood){alert('请先选择时空坐标');return;}
+    if(!textarea.value.trim()){alert('请写下你的感受');return;}
 
-  var html = '';
-  filtered.forEach(function(f, i) {
-    html +=
-      '<div class="fragment-card" style="animation-delay:' + (i * 0.08) + 's">' +
-        '<div class="fragment-passage">' + esc(f.passage) + '</div>' +
-        '<div class="fragment-meta">' +
-          '<span class="meta-item"><strong>' + esc(f.book) + '</strong></span>' +
-          (f.time ? '<span class="meta-item">' + esc(f.time) + '</span>' : '') +
-          (f.mood ? '<span class="meta-mood">' + esc(f.mood) + '</span>' : '') +
-          (f.page ? '<span class="meta-item">' + esc(f.page) + '</span>' : '') +
-          (f.feeling ? '<div class="meta-feeling">' + esc(f.feeling) + '</div>' : '') +
-        '</div>' +
-      '</div>';
-  });
+    var btn=document.getElementById('submitBtn');
+    var fb=document.getElementById('submitFeedback');
+    btn.disabled=true; btn.textContent='提交中...';
 
-  document.getElementById('fragmentList').innerHTML = html;
-}
+    fetch(API_URL,{method:'POST',body:JSON.stringify({
+        book:book, time:time, stage:stage, mood:mood,
+        feeling:textarea.value.trim(),
+        passage:document.getElementById('passageInput').value.trim(),
+        page:document.getElementById('pageInput').value.trim(),
+        date:new Date().toLocaleString('zh-CN')
+    })})
+    .then(function(r){return r.json();})
+    .then(function(d){
+        btn.textContent='已留下 ✓';
+        btn.style.background='rgba(196,154,108,0.3)'; btn.style.color='var(--accent)';
+        fb.textContent='感谢你的碎片，审核后将出现在时空文学中'; fb.classList.add('show');
+        setTimeout(function(){
+            btn.textContent='留下一念'; btn.style.background=''; btn.style.color=''; btn.disabled=false;
+            textarea.value=''; charCount.textContent='0';
+            document.getElementById('inputBook').value='';
+            document.getElementById('passageInput').value='';
+            document.getElementById('pageInput').value='';
+            document.querySelectorAll('.tag-option.selected').forEach(function(b){b.classList.remove('selected');});
+            fb.classList.remove('show');
+        },3000);
+    })
+    .catch(function(){
+        btn.textContent='留下一念'; btn.disabled=false;
+        fb.textContent='提交失败，请稍后再试'; fb.classList.add('show');
+        setTimeout(function(){fb.classList.remove('show');},3000);
+    });
+});
 
-function esc(s) {
-  if (!s) return '';
-  var el = document.createElement('span');
-  el.textContent = s;
-  return el.innerHTML;
-}
-
-loadFragments();
+loadData();
 </script>
 </body>
 </html>
